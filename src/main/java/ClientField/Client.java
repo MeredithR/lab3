@@ -32,7 +32,6 @@ public final class Client {
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
     public static void main(String[] args) throws Exception {
-        // Configure SSL.
         final SslContext sslCtx;
         if (SSL) {
             sslCtx = SslContextBuilder.forClient()
@@ -64,13 +63,8 @@ public final class Client {
                  }
              });
 
-            // Start the connection attempt.
            ChannelFuture ch=  b.connect(HOST, PORT).sync();
 
-         /* ClientHandler handler = ch.channel().pipeline().get(ClientHandler.class);
-          handler.firstMessage.add("228");
-          handler.firstMessage.add("ebal");
-          System.out.println(handler.firstMessage);*/
           ch.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully();
